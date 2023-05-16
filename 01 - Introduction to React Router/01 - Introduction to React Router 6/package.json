@@ -1,0 +1,9 @@
+{
+  "name": "01---introduction-to-react-router-6",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}

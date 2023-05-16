@@ -1,482 +1,102 @@
-# React Router 6
+# ⚛️ Learn React Router 6 with Bob Ziroll ⚛️
 
-#### React Course
+![Course teacher Bob Ziroll](https://scrimba.ams3.cdn.digitaloceanspaces.com/assets%2Fcourses%2Fgreactrouter6%2Fgithub2.png)
 
-#### Run Complete Project
+Hello and welcome! This is the starter code for each scrim in Bob Ziroll's Learn React Router 6 course on Scrimba! ⚛️ 
 
-#### Docs
+To follow the course on Scrimba's **interactive code-learning platform**, head to the [Learn React Router 6 page](https://scrimba.com/learn/reactrouter6) on Scrimba!
 
-[React Router Docs](https://reactrouter.com/docs/en/v6/getting-started/overview)
 
-#### Install
+## Please read this carefully!
+This README file is the best "single source of truth" for you to see updates made to the course if you're coming from the freeCodeCamp YouTube channel!
 
-```sh
-npm install react-router-dom@6
-```
+As time passes, dependencies can sometimes become outdated or start exhibiting bugs that weren't there when I first recorded the course.
 
-#### First Pages
+In the version of this course on Scrimba, it's easy for me to add quick updates and new lessons. However, the course on YouTube is frozen in time and unchangeable. So please come check the "[Updates](#updates)" section below often, as you may find there are important updates that can help you avoid common bugs.
 
-- App.js
 
-```js
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+## Setup
+Check out this video for a walkthrough of the steps to get your project set up on your own machine.
+[![GitHub Repo Setup Instructions](https://img.youtube.com/vi/IYZQu_UwlpU/0.jpg)](https://www.youtube.com/watch?v=IYZQu_UwlpU)
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<div>home page</div>} />
-        <Route
-          path="testing"
-          element={
-            <div>
-              <h2>testing </h2>
-            </div>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  );
-}
 
-export default App;
-```
+### Written Instructions
+1. Clone this repo to your own machine
+2. `cd` to the main folder in Terminal
+3. Run `npm install`
+4. (Optional, but preferred) Open just the section folder you're currently working on (e.g. 01 - Introduction to React Router) in your editor
+5. `cd` into the section folder, then into the specific lesson folder you're currently on.
+6. Run `npm run dev` to spin up the dev server
+7. Copy/paste or click on the localhost URL it provides to see the project at the starting point of the lesson
+8. Open the relevant files from the lesson and follow along.
 
-#### Components
+To kill the dev server, hit ctrl + c.
 
-- App.js
+## Updates
+### April 28, 2023
+In "Lesson 90: Challenge - Protected Routes in VanLife Part 2" [(https://youtu.be/nDGA3km5He4?t=23735)](https://youtu.be/nDGA3km5He4?t=23735) (05 - Actions and Protected Routes/14 - Challenge - Protected Routes in VanLife - Part 2), I remove `return null` from my inline loaders which was incorrect. What I should have followed up with was to add `return null` to the end of the `requireAuth` outside of the if statement. The code at the end of this challenge should be:
 
 ```js
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Products from "./pages/Products";
+import { redirect } from "react-router-dom"
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="products" element={<Products />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default App;
-```
-
-#### Links
-
-- Home.js, About.js
-
-```js
-import { Link } from 'react-router-dom';
-
-const Home = () => {
-  return (
-    <div>
-      <h2>Home Page</h2>
-      <Link to='/about' className='btn'>
-        About
-      </Link>
-      <a href="">
-    </div>
-  );
-};
-export default Home;
-```
-
-#### Error Page
-
-- App.js
-
-```js
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="products" element={<Products />} />
-        <Route path="*" element={<Error />} />
-      </Routes>
-    </BrowserRouter>
-  );
+export async function requireAuth() {
+    const isLoggedIn = false
+    
+    if (!isLoggedIn) {
+        throw redirect("/login")
+    }
+    return null
 }
 ```
+This way, for the loaders that are *only* running `await requireAuth()`, at least something (well, `null`, if you can call that "something" 😂) will get returned if the user is logged in.
 
-- Error.js
+### April 21, 2023
+With an update made to v 6.4.5 of React Router, Mirage JS is causing some errors when using the `redirect` function from React Router. **tl;dr:** a library that Mirage JS is using under the hood (`pretender`) uses a polyfill for `fetch`, and that polyfill does not adhere to the `fetch` specifications, in that it does not return a response with a `body` property. In React Router 6.4.5, they included a new check to make sure that a response has a `body` property, which makes any `redirect` call in React Router fail.
 
+You can work around this issue by modifying the response that comes back when calling `redirect`, like so:
+
+Instead of
 ```js
-import { Link } from "react-router-dom";
-
-const Error = () => {
-  return (
-    <section className="section">
-      <h2>404</h2>
-      <p>page not found</p>
-      <Link to="/">back home</Link>
-    </section>
-  );
-};
-export default Error;
+return redirect("new-url")
 ```
 
-#### Nested Pages
-
-- will refactor few times
-
-- App.js
-
+You can capture the response in a variable and add a body property manually:
 ```js
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="about" element={<About />} />
-          <Route path="products" element={<Products />} />
-          <Route path="*" element={<Error />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
+const response = redirect("new-url)
+response.body = true  // It's silly, but it works
+return response
 ```
 
-#### Shared Layout
+## Info
+React Router is the most popular routing library for React applications and one of the most downloaded React support libraries ever.
 
-- Home.js
+**In this course, you'll learn:**
 
-```js
-import { Link, Outlet } from "react-router-dom";
-
-const Home = () => {
-  return (
-    <section className="section">
-      <h2>Home Page</h2>
-      <Outlet />
-    </section>
-  );
-};
-export default Home;
-```
-
-#### Navbar
-
-- Navbar.js
-
-```js
-import { Link } from "react-router-dom";
-
-const Navbar = () => {
-  return (
-    <nav className="navbar">
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Link to="/products">Products</Link>
-    </nav>
-  );
-};
-export default Navbar;
-```
-
-- Home.js
-
-```js
-import { Link, Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-const Home = () => {
-  return (
-    <>
-      <Navbar />
-      <section className="section">
-        <Outlet />
-      </section>
-    </>
-  );
-};
-export default Home;
-```
-
-#### Index Routes
-
-- Index routes render in the parent routes outlet at the parent route's path.
-- Index routes match when a parent route matches but none of the other children match.
-- Index routes are the default child route for a parent route.
-- Index routes render when the user hasn't clicked one of the items in a navigation list yet.
-
-- copy Home.js content
-- SharedLayout.js
-
-```js
-import { Link, Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-const SharedLayout = () => {
-  return (
-    <>
-      <Navbar />
-      <section className="section">
-        <Outlet />
-      </section>
-    </>
-  );
-};
-export default SharedLayout;
-```
-
-- Home.js
-
-```js
-const Home = () => {
-  return (
-    <section className="section">
-      <h2>Home Page</h2>
-    </section>
-  );
-};
-export default Home;
-```
-
-- App.js
-
-```js
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="products" element={<Products />} />
-          <Route path="*" element={<Error />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
-```
-
-#### NavLink (style)
-
-- StyledNavbar.js
-
-```js
-import { NavLink } from "react-router-dom";
-
-<nav className="navbar">
-  <NavLink
-    to="/about"
-    style={({ isActive }) => {
-      return { color: isActive ? "red" : "grey" };
-    }}
-  >
-    Home
-  </NavLink>
-</nav>;
-```
-
-#### NavLink (className)
-
-- StyledNavbar.js
-
-```js
-<nav className="navbar">
-  <NavLink
-    to="/"
-    className={({ isActive }) => (isActive ? "link active" : "link")}
-  >
-    Home
-  </NavLink>
-</nav>
-```
-
-#### Reading URL Params
-
-- App.js
-
-```js
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="products" element={<Products />} />
-          <Route path="products/:productId" element={<SingleProduct />} />
-          <Route path="*" element={<Error />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
-```
-
-#### Single Product
-
-- SingleProduct.js
-
-```js
-import { Link, useParams } from "react-router-dom";
-import products from "../data";
-const SingleProduct = () => {
-  const { productId } = useParams();
-
-  return (
-    <section className="section product">
-      <h2>{productId}</h2>
-      <Link to="/products">back to products</Link>
-    </section>
-  );
-};
-
-export default SingleProduct;
-```
-
-#### Products Page
-
-- Products.js
-
-```js
-import { Link } from "react-router-dom";
-import products from "../data";
-const Products = () => {
-  return (
-    <section className="section">
-      <h2>products</h2>
-      <div className="products">
-        {products.map((product) => {
-          return (
-            <article key={product.id}>
-              <h5>{product.name}</h5>
-              <Link to={`/products/${product.id}`}>more info</Link>
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  );
-};
-
-export default Products;
-```
-
-#### Single Product
-
-- SingleProduct.js
-
-```js
-import { Link, useParams } from "react-router-dom";
-import products from "../data";
-const SingleProduct = () => {
-  const { productId } = useParams();
-  const product = products.find((product) => product.id === productId);
-  const { image, name } = product;
-
-  return (
-    <section className="section product">
-      <img src={image} alt={name} />
-      <h5>{name}</h5>
-      <Link to="/products">back to products</Link>
-    </section>
-  );
-};
-
-export default SingleProduct;
-```
-
-#### useNavigate()
-
-[ (?.) or Optional Chaining Explained](https://youtu.be/PuEGrylM1x8)
-
-- App.js
-
-```js
-function App() {
-  const [user, setUser] = useState(null);
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="products" element={<Products />} />
-          <Route path="products/:productId" element={<SingleProduct />} />
-          <Route path="login" element={<Login setUser={setUser} />} />
-          <Route path="dashboard" element={<Dashboard user={user} />} />
-          <Route path="*" element={<Error />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
-```
-
-- Login.js
-
-```js
- import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-const Login = ({ setUser }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!name || !email) return;
-    setUser({ name: name, email: email });
-    navigate('/dashboard');
-  };
-
-```
-
-[ (?.) or Optional Chaining Explained](https://youtu.be/PuEGrylM1x8)
-
-- Dashboard.js
-
-```js
-const Dashboard = ({ user }) => {
-  return (
-    <section className="section">
-      <h4>Hello, {user?.name}</h4>
-    </section>
-  );
-};
-export default Dashboard;
-```
-
-#### Protected Route
-
-- App.js
-
-```js
-<Route
-  path="dashboard"
-  element={
-    <ProtectedRoute user={user}>
-      <Dashboard user={user} />
-    </ProtectedRoute>
-  }
-/>
-```
-
-- ProtectedRoute.js
-
-```js
-import { Navigate } from "react-router-dom";
-
-const ProtectedRoute = ({ children, user }) => {
-  if (!user) {
-    return <Navigate to="/" />;
-  }
-  return children;
-};
-
-export default ProtectedRoute;
-```
+- What are SPAs?
+- Basic router setup
+- Route
+- Link
+- Route parameters
+- Nested routes and Outlet
+- Layout and Index routes
+- Relative paths
+- NavLink
+- Outlet context
+- Search parameters
+- Link state
+- 404 page / Splat routes
+- Loaders
+- Actions
+- Form & form data
+- defer()
+- Await
+- Suspense
+- Error handling & errorElement
+- useRouteError
+- useNavigate
+- useNavigation
+- useLocation
+- useLoaderData
+- useActionData
+- Protected Routes
+- Deploying with Netlify
