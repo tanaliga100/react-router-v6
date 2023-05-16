@@ -1,7 +1,8 @@
-import React from "react"
+import React from "react";
+import { useOutletContext } from "react-router-dom";
 
 export default function HostVanPricing() {
-    return (
-        <h2>Pricing info goes here</h2>
-    )
+  const { currentVan } = useOutletContext();
+
+  return <h2>$ {currentVan.pricing}</h2>;
 }

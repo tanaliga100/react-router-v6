@@ -1,9 +1,19 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
+section {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+#root {
+  padding: 2rem;
+}

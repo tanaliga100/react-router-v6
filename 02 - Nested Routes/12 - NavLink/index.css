@@ -1,19 +1,23 @@
-html, body {
-    margin: 0;
-    padding: 10px;
+html,
+body {
+  margin: 0;
+  padding: 10px;
 }
 
 a {
-    color: #161616;
-    text-decoration: none;
-    padding: 15px
+  color: #161616;
+  text-decoration: none;
+  padding: 15px;
 }
 
 a:hover {
-    font-weight: bold;
-    text-decoration: underline;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 nav > a:first-of-type {
-    margin-left: -15px;
+  margin-left: -15px;
+}
+.my-link {
+  color: crimson;
 }

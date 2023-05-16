@@ -1,20 +1,47 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
+import {
+  BrowserRouter,
+  NavLink,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 function Layout() {
+  const activeStyle = {
+    fontWeight: "bold",
+    textDecoration: "underline",
+    color: "red",
+  };
+
   return (
     <div>
       <h3>Welcome to my page!</h3>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact</Link>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? "my-link" : "")}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) => (isActive ? "my-link" : "")}
+        >
+          About
+        </NavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) => (isActive ? "my-link" : "")}
+        >
+          Contact
+        </NavLink>
       </nav>
       <Outlet />
     </div>
-  )
-};
+  );
+}
 
 function HomePage() {
   return (
@@ -51,7 +78,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
