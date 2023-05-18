@@ -20,6 +20,7 @@ export default function HostVanDetail() {
     color: "crimson",
     textDecoration: "underline",
   };
+
   return (
     <section>
       <Link to=".." relative="path" className="back-button">

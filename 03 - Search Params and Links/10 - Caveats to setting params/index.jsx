@@ -35,18 +35,40 @@ function HomePage() {
     </div>
   ));
 
+  function genNewSearchParams(key, value) {
+    const sp = new URLSearchParams(searchParams);
+    if (value === null) {
+      sp.delete("type");
+    } else {
+      sp.set(key, value);
+    }
+    return `?${sp.toString()}`;
+  }
+
+  function handleFilterChange(key, value) {
+    console.log(key, value);
+    setSearchParams((prevParams) => {
+      if (value === null) {
+        prevParams.delete(key);
+      } else {
+        prevParams.set(key, value);
+      }
+      return prevParams;
+    });
+  }
+
   return (
     <main>
       <h2>Home</h2>
       <div>
-        <Link to="?type=jedi">Jedi</Link>
-        <Link to="?type=sith">Sith</Link>
-        <Link to=".">Clear</Link>
+        <Link to={genNewSearchParams("type", "jedi")}>Jedi</Link>
+        <Link to={genNewSearchParams("type", "sith")}>Sith</Link>
+        <Link to={genNewSearchParams("type", null)}>Clear</Link>
       </div>
       <div>
-        <button onClick={() => setSearchParams({ type: "jedi" })}>Jedi</button>
-        <button onClick={() => setSearchParams({ type: "sith" })}>Sith</button>
-        <button onClick={() => setSearchParams({})}>Clear</button>
+        <button onClick={() => handleFilterChange("type", "jedi")}>Jedi</button>
+        <button onClick={() => handleFilterChange("type", "sith")}>Sith</button>
+        <button onClick={() => handleFilterChange("type", null)}>Clear</button>
       </div>
       <hr />
       {charEls}

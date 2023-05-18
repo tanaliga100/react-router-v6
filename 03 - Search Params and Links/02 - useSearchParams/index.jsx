@@ -1,27 +1,41 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Link, useSearchParams } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useSearchParams,
+} from "react-router-dom";
 
 const swCharacters = [
   { name: "Luke Skywalker", type: "Jedi" },
   { name: "Darth Vader", type: "Sith" },
   { name: "Emperor Palpatine", type: "Sith" },
-  { name: "Yoda", type: "Jedi" }
-]
+  { name: "Yoda", type: "Jedi" },
+];
 
 function HomePage() {
-  const charEls = swCharacters
-    .map(char => (
-      <div key={char.name}>
-        <h3
-          style={{ color: char.type.toLowerCase() === "jedi" ? "blue" : "red" }}
-        >
-          Name: {char.name}
-        </h3>
-        <p>Type: {char.type}</p>
-        <hr />
-      </div>
-    ))
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const typeParams = searchParams.get("type");
+  const sortParams = searchParams.get("sort");
+  const sortStrings = searchParams.toString();
+
+  console.log(typeParams);
+  console.log(sortParams);
+  console.log(sortStrings);
+
+  const charEls = swCharacters.map((char) => (
+    <div key={char.name}>
+      <h3
+        style={{ color: char.type.toLowerCase() === "jedi" ? "blue" : "red" }}
+      >
+        Name: {char.name}
+      </h3>
+      <p>Type: {char.type}</p>
+      <hr />
+    </div>
+  ));
 
   return (
     <main>
@@ -31,15 +45,14 @@ function HomePage() {
   );
 }
 
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/characters" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);

@@ -1,7 +1,14 @@
-import React from "react"
+import React from "react";
+import { useRouteError } from "react-router-dom";
 
 export default function Error() {
-    return (
-        <h1>An error occured!</h1>
-    )
+  const { message, status, statusText } = useRouteError();
+  return (
+    <section className="error">
+      <h1>{message}</h1>
+      <pre>
+        {status} - {statusText}
+      </pre>
+    </section>
+  );
 }

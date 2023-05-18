@@ -1,26 +1,27 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
+import React from "react";
+import ReactDOM from "react-dom/client";
 import {
+  Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
-  Route
-} from "react-router-dom"
+} from "react-router-dom";
 
-import HomePage, { loader as homePageLoader } from "./Home"
+import HomePage, { loader as homePageLoader } from "./Home";
 
-const router = createBrowserRouter(createRoutesFromElements(
-  <Route
-    path="/"
-    element={<HomePage />}
-    loader={homePageLoader}
-  />
-))
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route
+      path="/"
+      element={<HomePage />}
+      loader={homePageLoader}
+      errorElement={<h1>There was an error</h1>}
+    />
+  )
+);
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />;
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />)
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
