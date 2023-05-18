@@ -62,7 +62,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return <RouterProvider router={router} />;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
