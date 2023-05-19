@@ -7,6 +7,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
+import ErrorElement from "./Error";
 import HomePage, { loader as homePageLoader } from "./Home";
 
 const router = createBrowserRouter(
@@ -15,7 +16,7 @@ const router = createBrowserRouter(
       path="/"
       element={<HomePage />}
       loader={homePageLoader}
-      errorElement={<h1>There was an error</h1>}
+      errorElement={<ErrorElement />}
     />
   )
 );

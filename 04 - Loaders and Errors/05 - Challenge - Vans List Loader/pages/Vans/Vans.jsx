@@ -11,11 +11,10 @@ import { getVans } from "../../api";
  *    this page.
  */
 export function loader() {
-  return "Vans data goes here";
+  return "VANS data is here...";
 }
 
 export default function Vans(props) {
-  console.log({ props });
   const [searchParams, setSearchParams] = useSearchParams();
   const [vans, setVans] = React.useState([]);
   const [loading, setLoading] = React.useState(false);

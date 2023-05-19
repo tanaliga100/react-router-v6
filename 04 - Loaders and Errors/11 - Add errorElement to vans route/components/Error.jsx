@@ -1,9 +1,11 @@
 import React from "react";
+import { useRouteError } from "react-router-dom";
 
 const Error = () => {
+  const error = useRouteError();
   return (
     <>
-      <h1>An error occurred!</h1>
+      <h1>{error}</h1>
     </>
   );
 };
