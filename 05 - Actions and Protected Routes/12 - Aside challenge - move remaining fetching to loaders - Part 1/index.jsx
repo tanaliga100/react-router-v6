@@ -12,11 +12,11 @@ import Layout from "./components/Layout";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Host/Dashboard";
-import HostVanDetail from "./pages/Host/HostVanDetail";
+import HostVanDetail, { hostVanLoaderDetail } from "./pages/Host/HostVanDetail";
 import HostVanInfo from "./pages/Host/HostVanInfo";
 import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import HostVanPricing from "./pages/Host/HostVanPricing";
-import HostVans from "./pages/Host/HostVans";
+import HostVans, { loader as hostVanLoader } from "./pages/Host/HostVans";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
 import Login from "./pages/Login";
@@ -61,19 +61,11 @@ const router = createBrowserRouter(
             return null;
           }}
         />
-        <Route
-          path="vans"
-          element={<HostVans />}
-          loader={async () => {
-            return null;
-          }}
-        />
+        <Route path="vans" element={<HostVans />} loader={hostVanLoader} />
         <Route
           path="vans/:id"
           element={<HostVanDetail />}
-          loader={async () => {
-            return null;
-          }}
+          loader={hostVanLoaderDetail}
         >
           <Route
             index
