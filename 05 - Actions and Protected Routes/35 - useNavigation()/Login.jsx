@@ -1,8 +1,13 @@
 import React from "react";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function fakeLoginUser(creds) {
   if (creds.email === "b@b.com" && creds.password === "p123") {
+    await sleep(1000);
     localStorage.setItem("loggedin", true);
     return {
       email: creds.email,
@@ -37,7 +42,9 @@ export default function Login() {
       <br />
       <input type="password" name="password" placeholder="Password" />
       <br />
-      <button>{data.state === "submitting" ? "Submitting" : "Log In"}</button>
+      <button disabled={data.state === "submitting"}>
+        {data.state === "submitting" ? "Logging In" : "Log In"}
+      </button>
     </Form>
   );
 }
