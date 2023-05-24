@@ -1,20 +1,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { fetchVanDetail } from "../request";
 export default function VanDetail() {
   const params = useParams();
-  console.log(params);
-  const [van, setVan] = useState(null);
-
-  React.useEffect(() => {
-    fetch(`/api/vans/${params.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.vans);
-
-        setVan(data.vans);
-      })
-      .catch((err) => console.log({ err }));
-  }, [params.id]);
 
   /**
    * Challenge part 2:
@@ -24,6 +12,18 @@ export default function VanDetail() {
    *
    * Hint: the endpoint is a GET request to `/api/vans/:vanid`
    */
+  const [van, setVan] = useState([]);
+  async function loadVan() {
+    try {
+      const data = await fetchVanDetail(params.id);
+      setVan(data.vans);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  React.useEffect(() => {
+    loadVan();
+  }, []);
   return (
     <div className="van-detail-container">
       {van ? (

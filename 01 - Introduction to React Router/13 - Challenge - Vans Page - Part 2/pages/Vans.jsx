@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import fetchVansData from "../api";
 
 /**
  * Challenge: Fetch and map over the data to display it on
@@ -13,25 +14,25 @@ import { Link } from "react-router-dom";
  *    Vans page loads, and only fetch it the one time?
  * 3. You may get an error saying "console.groupCollapsed is not
  *    a function". You can ignore it for now.
+ *
  */
 
 export default function Vans() {
   const [vans, setVans] = useState([]);
+  const [error, setError] = useState({});
 
-  async function fetchVans() {
+  async function loadVans() {
     try {
-      const res = await fetch(`api/vans`);
-      const data = await res.json();
-      setVans(data.vans);
-
-      console.log(data.vans);
+      const data = await fetchVansData();
+      console.log({ data });
+      setVans(data);
     } catch (error) {
-      console.log({ error });
+      console.log(error);
+      setError(error);
     }
   }
-
   React.useEffect(() => {
-    fetchVans();
+    loadVans();
   }, []);
 
   const renderVans = vans.map((van) => (
