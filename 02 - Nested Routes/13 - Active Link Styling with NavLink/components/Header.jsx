@@ -17,7 +17,7 @@ export default function Header() {
    */
 
   const activeStyle = {
-    fontWeight: "bold",
+    fontWeight: "10rem",
     textDecoration: "underline",
     color: "#161616",
   };

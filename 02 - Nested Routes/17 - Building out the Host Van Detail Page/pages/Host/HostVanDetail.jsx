@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 export default function HostVanDetail() {
   const [currentVan, setCurrentVan] = useState(null);
   const params = useParams();
-  console.log(currentVan);
+  console.log(params);
 
   React.useEffect(() => {
     fetch(`/api/host/vans/${params.id}`)
@@ -18,7 +18,7 @@ export default function HostVanDetail() {
 
   return (
     <div>
-      <img src={currentVan.imageUrl} alt="image" width={150} />
+      <img src={currentVan.imageUrl} alt="image" width={300} height={150} />
       <h2>{currentVan.name}</h2>
       <p>${currentVan.price}</p>
       <p>{currentVan.type}</p>

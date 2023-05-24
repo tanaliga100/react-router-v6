@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, NavLink, Outlet, useParams } from "react-router-dom";
 
 export default function HostVanDetail() {
   const { id } = useParams();
@@ -31,17 +31,10 @@ export default function HostVanDetail() {
             <h4>${currentVan.price}/day</h4>
           </div>
         </div>
-        <section
-          style={{
-            display: "flex",
-            gap: "3rem",
-            textAlign: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Link to={`/host/vans/${id}`}> Details</Link>
-          <Link to={`/host/vans/${id}/pricing`}> Pricing</Link>
-          <Link to={`/host/vans/${id}/photos`}> Photos</Link>
+        <section className="details-link">
+          <NavLink to={`/host/vans/${id}`}> Details</NavLink>
+          <NavLink to={`/host/vans/${id}/pricing`}> Pricing</NavLink>
+          <NavLink to={`/host/vans/${id}/photos`}> Photos</NavLink>
         </section>
         <Outlet />
       </div>

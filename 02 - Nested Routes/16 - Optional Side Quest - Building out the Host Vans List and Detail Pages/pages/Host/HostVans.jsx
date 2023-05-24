@@ -10,30 +10,21 @@ export default function HostVans() {
   }, []);
 
   const vanElements = vans.map((van) => (
-    <div
+    <Link
+      to={`/host/vans/${van.id}`}
       key={van.id}
-      className="van-tile"
-      style={{
-        display: "flex",
-        // justifyContent: "space-evenly",
-        textAlign: "left",
-        padding: "1rem",
-        alignItems: "center",
-        gap: "2rem",
-      }}
+      className="host-van-linl-wrappers"
     >
-      <Link to={`/host/vans/${van.id}`}>
-        <img src={van.imageUrl} style={{ width: 150, height: 100 }} />
-        <div className="van-info">
-          <h3>{van.name}</h3>
-          <p>
-            ${van.price}
-            <span>/day</span>
-          </p>
-        </div>
-        <i className={`van-type ${van.type} selected`}>{van.type}</i>
-      </Link>
-    </div>
+      <img src={van.imageUrl} style={{ width: 150, height: 100 }} />
+      <div className="van-info">
+        <h3>{van.name}</h3>
+        <p>
+          ${van.price}
+          <span>/day</span>
+        </p>
+      </div>
+      <i className={`van-type ${van.type} selected`}>{van.type}</i>
+    </Link>
   ));
 
   return (

@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 function Layout() {
-  const activeStyle = {
+  const activeClass = {
     fontWeight: "bold",
     textDecoration: "underline",
     color: "red",
@@ -21,19 +21,22 @@ function Layout() {
       <nav>
         <NavLink
           to="/"
-          className={({ isActive }) => (isActive ? "my-link" : "")}
+          // className={({ isActive }) => (isActive ? "my-link" : null)}
+          style={({ isActive }) => (isActive ? activeClass : null)}
         >
           Home
         </NavLink>
         <NavLink
           to="/about"
-          className={({ isActive }) => (isActive ? "my-link" : "")}
+          // className={({ isActive }) => (isActive ? "my-link" : null)}
+          style={({ isActive }) => (isActive ? activeClass : null)}
         >
           About
         </NavLink>
         <NavLink
           to="/contact"
-          className={({ isActive }) => (isActive ? "my-link" : "")}
+          // className={({ isActive }) => (isActive ? "my-link" : null)}
+          style={({ isActive }) => (isActive ? activeClass : null)}
         >
           Contact
         </NavLink>
