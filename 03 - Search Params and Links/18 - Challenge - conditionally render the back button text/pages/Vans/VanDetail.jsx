@@ -24,7 +24,7 @@ export default function VanDetail() {
    */
 
   const search = location.state?.search || "";
-  const vans = location.state?.type || "all";
+  const getString = location.state?.params[0] || "all";
 
   return (
     <div className="van-detail-container">
@@ -35,10 +35,9 @@ export default function VanDetail() {
         style={{ textDecoration: "none" }}
       >
         &larr;{"  "}
-        <span className="nav-button">{`Back to ${vans
-          .toString()
-          .toUpperCase()} vans`}</span>
+        <span className="nav-button ">{`Back to ${getString} vans`}</span>
       </Link>
+
       {van ? (
         <div className="van-detail">
           <img src={van.imageUrl} />

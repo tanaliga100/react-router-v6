@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   BrowserRouter,
-  Link,
   Route,
   Routes,
   useSearchParams,
@@ -35,15 +34,15 @@ function HomePage() {
     </div>
   ));
 
-  function genNewSearchParamString(key, value) {
-    const sp = new URLSearchParams(searchParams);
-    if (value === null) {
-      sp.delete(key);
-    } else {
-      sp.set(key, value);
-    }
-    return `?${sp.toString()}`;
-  }
+  // function genNewSearchParamString(key, value) {
+  //   const sp = new URLSearchParams(searchParams);
+  //   if (value === null) {
+  //     sp.delete(key);
+  //   } else {
+  //     sp.set(key, value);
+  //   }
+  //   return `?${sp.toString()}`;
+  // }
 
   function handleFilterChange(key, value) {
     setSearchParams((prevParams) => {
@@ -60,9 +59,9 @@ function HomePage() {
     <main>
       <h2>Home</h2>
       <div>
-        <Link to={genNewSearchParamString("type", "jedi")}>Jedi</Link>
+        {/* <Link to={genNewSearchParamString("type", "jedi")}>Jedi</Link>
         <Link to={genNewSearchParamString("type", "sith")}>Sith</Link>
-        <Link to={genNewSearchParamString("type", null)}>Clear</Link>
+        <Link to={genNewSearchParamString("type", null)}>Clear</Link> */}
       </div>
       <div>
         <button onClick={() => handleFilterChange("type", "jedi")}>Jedi</button>
@@ -79,7 +78,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/characters" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );

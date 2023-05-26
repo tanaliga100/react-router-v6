@@ -22,7 +22,6 @@ export default function Vans() {
    * to a relative path. There's also one still in the HostVans.jsx
    * file that you should change, too.
    */
-
   const vanElements = displayedVans.map((van) => (
     <div key={van.id} className="van-tile">
       <Link to={van.id}>

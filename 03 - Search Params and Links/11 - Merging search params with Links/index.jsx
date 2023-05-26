@@ -35,28 +35,34 @@ function HomePage() {
     </div>
   ));
 
-  const genNewSearchParams = (key, value) => {
-    const searchPara = new URLSearchParams(searchParams);
+  // SETTER FUNCTION USING LINK COMPONENT
+  function getNewParams(key, value) {
+    const params = new URLSearchParams(searchParams);
     if (value === null) {
-      searchPara.delete(key);
+      params.delete(key);
     } else {
-      searchPara.set(key, value);
+      params.set(key, value);
     }
-    return `?${searchPara}`;
-  };
+    console.log(params);
+    return `?${params.toString()}`;
+  }
 
   return (
     <main>
       <h2>Home</h2>
       <div>
-        <Link to={genNewSearchParams("type", "jedi")}>Jedi</Link>
-        <Link to={genNewSearchParams("type", "sith")}>Sith</Link>
-        <Link to={genNewSearchParams("type", null)}>Clear</Link>
+        {/* <Link to="?type=jedi">Jedi</Link>
+        <Link to="?type=sith">Sith</Link>
+        <Link to="">Clear</Link> */}
+
+        <Link to={getNewParams("type", "jedi")}>Jedi</Link>
+        <Link to={getNewParams("type", "sith")}>Sith</Link>
+        <Link to={getNewParams("type", null)}>Clear</Link>
       </div>
       <div>
-        <button onClick={() => setSearchParams({ type: "jedi" })}>Jedi</button>
+        {/* <button onClick={() => setSearchParams({ type: "jedi" })}>Jedi</button>
         <button onClick={() => setSearchParams({ type: "sith" })}>Sith</button>
-        <button onClick={() => setSearchParams({})}>Clear</button>
+        <button onClick={() => setSearchParams({})}>Clear</button> */}
       </div>
       <hr />
       {charEls}
@@ -68,7 +74,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/characters" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );

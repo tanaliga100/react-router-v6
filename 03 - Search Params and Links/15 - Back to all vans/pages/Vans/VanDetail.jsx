@@ -10,7 +10,6 @@ export default function VanDetail() {
       .then((res) => res.json())
       .then((data) => setVan(data.vans));
   }, [params.id]);
-
   return (
     <div className="van-detail-container">
       <Link to=".." relative="path" className="back-button">
