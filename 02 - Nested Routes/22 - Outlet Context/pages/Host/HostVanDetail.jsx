@@ -10,7 +10,6 @@ export default function HostVanDetail() {
     textDecoration: "underline",
     color: "#161616",
   };
-
   React.useEffect(() => {
     fetch(`/api/host/vans/${id}`)
       .then((res) => res.json())

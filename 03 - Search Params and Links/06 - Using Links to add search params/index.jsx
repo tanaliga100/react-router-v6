@@ -17,23 +17,28 @@ const swCharacters = [
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const typeFilter = searchParams.get("type");
+  const typeParams = searchParams.get("type");
+  const sortParams = searchParams.get("sort");
 
-  const displayedCharacters = typeFilter
-    ? swCharacters.filter((char) => char.type.toLowerCase() === typeFilter)
+  const displayedType = typeParams
+    ? swCharacters.filter(
+        (each) => each.type.toLowerCase() === typeParams.toLowerCase()
+      )
     : swCharacters;
 
-  const charEls = displayedCharacters.map((char) => (
-    <div key={char.name}>
-      <h3
-        style={{ color: char.type.toLowerCase() === "jedi" ? "blue" : "red" }}
-      >
-        Name: {char.name}
-      </h3>
-      <p>Type: {char.type}</p>
-      <hr />
-    </div>
-  ));
+  const charEls =
+    displayedType &&
+    displayedType.map((char) => (
+      <div key={char.name}>
+        <h3
+          style={{ color: char.type.toLowerCase() === "jedi" ? "blue" : "red" }}
+        >
+          Name: {char.name}
+        </h3>
+        <p>Type: {char.type}</p>
+        <hr />
+      </div>
+    ));
 
   return (
     <main>
@@ -41,7 +46,7 @@ function HomePage() {
       <div>
         <Link to="?type=jedi"> Jedi</Link>
         <Link to="?type=sith"> Sith</Link>
-        <Link to="." relative="path">
+        <Link to=".." relative="path">
           {" "}
           Clear
         </Link>
@@ -56,7 +61,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/characters" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );

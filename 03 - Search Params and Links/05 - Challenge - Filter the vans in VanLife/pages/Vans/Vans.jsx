@@ -5,33 +5,39 @@ export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [vans, setVans] = React.useState([]);
 
-  const typeFilter = searchParams.get("type");
-  const sortFilter = searchParams.get("sort");
+  const typeParams = searchParams.get("type");
+  const sortParams = searchParams.get("sort");
 
   React.useEffect(() => {
     fetch("/api/vans")
       .then((res) => res.json())
       .then((data) => setVans(data.vans));
   }, []);
-  const displayedVans = sortFilter
-    ? vans.filter((van) => van.type.toLowerCase() === sortFilter)
+
+  // FILTER IMP
+  const displayedType = typeParams
+    ? vans.filter(
+        (each) => each.type.toLowerCase() === typeParams.toLowerCase()
+      )
     : vans;
 
-  const vanElements = displayedVans.map((van) => (
-    <div key={van.id} className="van-tile">
-      <Link to={`/vans/${van.id}`}>
-        <img src={van.imageUrl} />
-        <div className="van-info">
-          <h3>{van.name}</h3>
-          <p>
-            ${van.price}
-            <span>/day</span>
-          </p>
-        </div>
-        <i className={`van-type ${van.type} selected`}>{van.type}</i>
-      </Link>
-    </div>
-  ));
+  const vanElements =
+    displayedType &&
+    displayedType.map((van) => (
+      <div key={van.id} className="van-tile">
+        <Link to={`/vans/${van.id}`}>
+          <img src={van.imageUrl} />
+          <div className="van-info">
+            <h3>{van.name}</h3>
+            <p>
+              ${van.price}
+              <span>/day</span>
+            </p>
+          </div>
+          <i className={`van-type ${van.type} selected`}>{van.type}</i>
+        </Link>
+      </div>
+    ));
 
   return (
     <div className="van-list-container">

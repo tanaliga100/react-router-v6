@@ -16,10 +16,19 @@ const swCharacters = [
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const typeFilter = searchParams.get("type");
+  const typeParams = searchParams.get("type");
+  const sortParams = searchParams.get("sort");
 
-  const displayedCharacters = typeFilter
-    ? swCharacters.filter((char) => char.type.toLowerCase() === typeFilter)
+  // SETTER FUNCTION
+  const handleChange = (newVal) => {
+    console.log("fired", newVal);
+    setSearchParams(newVal);
+  };
+
+  const displayedCharacters = typeParams
+    ? swCharacters.filter(
+        (char) => char.type.toLowerCase() === typeParams.toLowerCase()
+      )
     : swCharacters;
 
   const charEls = displayedCharacters.map((char) => (
@@ -38,11 +47,9 @@ function HomePage() {
     <main>
       <h2>Home</h2>
       <div>
-        <button onClick={() => setSearchParams({ type: "jedi" })}>Jedi</button>
-        <button onClick={() => setSearchParams({ type: "sith" })}>
-          Sith
-        </button>{" "}
-        <button onClick={() => setSearchParams({})}>Clear</button>
+        <button onClick={() => handleChange({ type: "jedi" })}>Jedi</button>
+        <button onClick={() => handleChange({ type: "sith" })}>Sith</button>
+        <button onClick={() => handleChange({})}>Clear</button>
       </div>
       <hr />
       {charEls}
@@ -54,7 +61,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/characters" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );

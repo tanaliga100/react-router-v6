@@ -16,14 +16,11 @@ const swCharacters = [
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const params = useSearchParams();
 
-  const typeParams = searchParams.get("type");
-  const sortParams = searchParams.get("sort");
-  const sortStrings = searchParams.toString();
-
-  console.log(typeParams);
-  console.log(sortParams);
-  console.log(sortStrings);
+  const type = params[0].get("type");
+  const sort = params[0].get("sort");
+  console.log(type, sort);
 
   const charEls = swCharacters.map((char) => (
     <div key={char.name}>

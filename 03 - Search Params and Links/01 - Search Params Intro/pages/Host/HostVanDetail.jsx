@@ -64,7 +64,6 @@ export default function HostVanDetail() {
     </section>
   );
 }
-
 /**
  * Challenge: check out the docs linked in the slide, and see if you
  * can implement the Outlet Context feature it talks about.

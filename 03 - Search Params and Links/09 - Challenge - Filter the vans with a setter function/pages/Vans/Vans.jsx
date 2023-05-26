@@ -5,7 +5,7 @@ export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [vans, setVans] = React.useState([]);
 
-  const typeFilter = searchParams.get("type");
+  const typeParams = searchParams.get("type");
 
   React.useEffect(() => {
     fetch("/api/vans")
@@ -13,8 +13,13 @@ export default function Vans() {
       .then((data) => setVans(data.vans));
   }, []);
 
-  const displayedVans = typeFilter
-    ? vans.filter((van) => van.type === typeFilter)
+  // HANDLE SETTER FUNCTION
+  const handleClear = () => {
+    setSearchParams({});
+  };
+
+  const displayedVans = typeParams
+    ? vans.filter((van) => van.type === typeParams)
     : vans;
 
   const vanElements = displayedVans.map((van) => (
@@ -63,7 +68,7 @@ export default function Vans() {
           Rugged
         </button>
         <button
-          onClick={() => setSearchParams({})}
+          onClick={() => handleClear()}
           className="van-type clear-filters"
         >
           Clear filter

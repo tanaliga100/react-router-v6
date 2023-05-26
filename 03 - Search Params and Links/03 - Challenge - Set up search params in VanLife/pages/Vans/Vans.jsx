@@ -3,9 +3,8 @@ import { Link, useSearchParams } from "react-router-dom";
 
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const typeFilter = searchParams.get("type");
-  console.log(typeFilter);
+  const type = searchParams.get("type");
+  console.log(type);
 
   /**
    * Challenge: access the search params in this component
@@ -15,6 +14,7 @@ export default function Vans() {
    *    `searchParams` object) to a variable called `typeFilter`
    * 3. Log the value of the `typeFilter` to the console
    */
+
   const [vans, setVans] = React.useState([]);
   React.useEffect(() => {
     fetch("/api/vans")
@@ -41,6 +41,7 @@ export default function Vans() {
   return (
     <div className="van-list-container">
       <h1>Explore our van options</h1>
+
       <div className="van-list">{vanElements}</div>
     </div>
   );

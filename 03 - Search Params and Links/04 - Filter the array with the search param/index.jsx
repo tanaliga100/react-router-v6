@@ -18,14 +18,20 @@ function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const typeFilter = searchParams.get("type");
 
-  const displayedCharacters = typeFilter
-    ? swCharacters.filter((char) => char.type.toLowerCase() === typeFilter)
+  const displayedType = typeFilter
+    ? swCharacters.filter(
+        (char) => char.type.toLowerCase() === typeFilter.toLowerCase()
+      )
     : swCharacters;
 
-  const charEls = displayedCharacters.map((char) => (
+  console.log(displayedType);
+
+  const charEls = displayedType.map((char) => (
     <div key={char.name}>
       <h3
-        style={{ color: char.type.toLowerCase() === "jedi" ? "blue" : "red" }}
+        style={{
+          color: char.type.toLowerCase() === "jedi" ? "blue" : "red",
+        }}
       >
         Name: {char.name}
       </h3>
