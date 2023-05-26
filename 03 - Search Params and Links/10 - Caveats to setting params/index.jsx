@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   BrowserRouter,
-  Link,
   Route,
   Routes,
   useSearchParams,
@@ -35,18 +34,17 @@ function HomePage() {
     </div>
   ));
 
-  function genNewSearchParams(key, value) {
-    const sp = new URLSearchParams(searchParams);
+  function getNewSearchParams(key, value) {
+    const url = new URLSearchParams(searchParams);
     if (value === null) {
-      sp.delete("type");
+      url.delete(key);
     } else {
-      sp.set(key, value);
+      url.set(key, value);
     }
-    return `?${sp.toString()}`;
+    return `?${url.toString()}`;
   }
 
   function handleFilterChange(key, value) {
-    console.log(key, value);
     setSearchParams((prevParams) => {
       if (value === null) {
         prevParams.delete(key);
@@ -58,12 +56,28 @@ function HomePage() {
   }
 
   return (
+    // <main>
+    //   <h2>Home</h2>
+    //   <div>
+    //     <Link to="?type=jedi">Jedi</Link>
+    //     <Link to="?type=sith">Sith</Link>
+    //     <Link to="">Clear</Link>
+    //   </div>
+    //   <div>
+    //  <button onClick={() => setSearchParams({ type: "jedi" })}>Jedi</button>
+    //         <button onClick={() => setSearchParams({ type: "sith" })}>Sith</button>
+    //         <button onClick={() => setSearchParams({})}>Clear</button>
+    //   </div>
+    //   <hr />
+    //   {charEls}
+    // </main>
+
     <main>
       <h2>Home</h2>
       <div>
-        <Link to={genNewSearchParams("type", "jedi")}>Jedi</Link>
-        <Link to={genNewSearchParams("type", "sith")}>Sith</Link>
-        <Link to={genNewSearchParams("type", null)}>Clear</Link>
+        {/* <Link to={getNewSearchParams("type", "jedi")}>Jedi</Link>
+        <Link to={getNewSearchParams("type", "sith")}>Sith</Link>
+        <Link to={getNewSearchParams("type", null)}>Clear</Link> */}
       </div>
       <div>
         <button onClick={() => handleFilterChange("type", "jedi")}>Jedi</button>
@@ -80,7 +94,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/characters" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );
